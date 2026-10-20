@@ -544,22 +544,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR HEADER -->
-    <header>
-        <div class="brand">
-            <img src="https://i.ibb.co/Pzh1Tb5Y/imagen-2026-09-17-161649836.png" width="170">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Inicio</a></li>
-                <li><a href="#">Equipos</a></li>
-                <li><a href="#">Modos</a></li>
-                <li><a href="#">Ranking</a></li>
-                <li><a href="#">Descarga</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="btn-header">Jugar Ahora &rarr;</a>
-    </header>
+    {% include 'app1/componentes/navbar.html' %}
 
     <!-- 1. HERO SECTION -->
     <section class="hero">
@@ -682,31 +667,18 @@
         <div class="section-divider"></div>
     </section>
 
+    {% block content %}
+        <h1>test chiquitapia boton</h1>
+    {% endblock %}
+
+    <body>
+        {% block content %}
+        
+        {% endblock %}
+    </body>
+
     <!-- FOOTER -->
-    <footer>
-        <div class="footer-top">
-            <div class="brand">
-                <a href="https://discord.gg/vm6gKxGPxG">
-                    <img src="https://i.ibb.co/Pzh1Tb5Y/imagen-2026-09-17-161649836.png" width="170px">
-                </a>
-            </div>
-            <nav style="display: block;">
-                <ul>
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Equipos</a></li>
-                    <li><a href="#">Modos</a></li>
-                    <li><a href="#">Descarga</a></li>
-                </ul>
-            </nav>
-            <div class="footer-socials">
-                <a href="https://discord.gg/vm6gKxGPxG"><i class="fa-brands fa-discord"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div>Haxball LPF © 2026. Todas las marcas y logotipos son propiedad de sus respectivos dueños.</div>
-            <div class="slogan">JUGÁ. COMPETÍ. DISFRUTÁ.</div>
-        </div>
-    </footer>
+    {% include 'app1/componentes/footer.html' %}
 
 </body>
 </html>
