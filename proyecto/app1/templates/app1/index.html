@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAXBALL LPF</title>
+    <!-- Fuentes de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos de redes y menú -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           RESET Y VARIABLES DE COLOR EXACTAS
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #020712;
+            --bg-card: rgba(8, 19, 38, 0.7);
+            --cyan-primary: #00d2ff;
+            --cyan-glow: rgba(0, 210, 255, 0.3);
+            --text-title: #ffffff;
+            --text-body: #8a99ad;
+            --border-card: rgba(0, 210, 255, 0.2);
+            --border-divider: rgba(0, 210, 255, 0.15);
+            --font-heading: 'Teko', sans-serif;
+            --font-body: 'Work Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-title);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* FONDO GENERAL CON EFECTO DE LUZ AZUL Y PATRÓN */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 900px;
+            background: radial-gradient(circle at 75% 20%, rgba(0, 150, 255, 0.18) 0%, rgba(0, 210, 255, 0.05) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================
+           NAVBAR / HEADER
+           ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10%;
+            background: rgba(2, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            background: var(--cyan-primary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .brand-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            line-height: 0.9;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text span {
+            color: var(--cyan-primary);
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav a {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #8a9cb0;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--cyan-primary);
+        }
+
+        .btn-header {
+            border: 1px solid var(--cyan-primary);
+            color: var(--cyan-primary);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 0 8px rgba(0, 210, 255, 0.15);
+        }
+
+        .btn-header:hover {
+            background: var(--cyan-primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--cyan-primary);
+        }
+
+        /* ==========================================
+           CONTENEDOR DE SECCIONES Y DIVISORES LUMINOSOS
+           ========================================== */
+        section {
+            position: relative;
+            padding: 90px 10% 80px;
+            z-index: 1;
+        }
+
+        /* Línea separadora brillante entre secciones */
+        .section-divider {
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-divider), transparent);
+        }
+
+        .subtitle-tag {
+            color: var(--cyan-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* Botón estilo "JUGAR AHORA" */
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cyan-primary);
+            color: #040914;
+            padding: 12px 26px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            margin-top: 30px;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+        }
+
+        /* ==========================================
+           1. HERO SECTION
+           ========================================== */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 40px;
+            align-items: center;
+            padding-top: 150px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 4.8rem;
+            line-height: 0.9;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--cyan-primary);
+        }
+
+        .hero-desc {
+            color: var(--text-body);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            max-width: 440px;
+        }
+
+        /* Cancha SVG / Preview */
+        .preview-box {
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            background: rgba(4, 14, 28, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 210, 255, 0.1);
+        }
+
+        .pitch-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        /* ==========================================
+           2. MODOS DE JUEGO
+           ========================================== */
+        .modos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .modos-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+
+        .modos-side-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: right;
+            line-height: 0.95;
+            color: #ffffff;
+        }
+
+        .modos-desc {
+            color: var(--text-body);
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+        }
+
+        .modos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .card-modo {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 6px;
+            padding: 30px 20px;
+            transition: all 0.3s;
+        }
+
+        .card-modo:hover {
+            border-color: var(--cyan-primary);
+            box-shadow: 0 0 15px var(--cyan-glow);
+            transform: translateY(-3px);
+        }
+
+        .card-modo i {
+            font-size: 1.8rem;
+            color: var(--cyan-primary);
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .card-modo h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .card-modo p {
+            color: var(--text-body);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           3. EQUIPOS
+           ========================================== */
+        .equipos-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .equipos-text h2 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .equipos-text p {
+            color: var(--text-body);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--cyan-primary);
+            color: var(--cyan-primary);
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--cyan-primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--cyan-primary);
+        }
+
+        .escudos-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .escudo-box {
+            background: rgba(8, 20, 40, 0.6);
+            border: 1px solid var(--border-card);
+            border-radius: 6px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .escudo-box:hover {
+            border-color: var(--cyan-primary);
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        /* SVG Logos simplificados */
+        .shield-svg {
+            width: 34px;
+            height: 38px;
+        }
+
+        /* ==========================================
+           4. COMUNIDAD / CHAT PREVIEW
+           ========================================== */
+        .comunidad-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .comunidad-text h2 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .comunidad-text p {
+            color: var(--text-body);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* Chat simulado del juego */
+        .chat-container {
+            border: 1px solid var(--border-card);
+            border-radius: 6px;
+            padding: 12px;
+            background: rgba(3, 10, 22, 0.9);
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .mini-pitch {
+            background: #1e452a;
+            border-radius: 4px;
+            height: 140px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 0.68rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .msg-cyan { color: #00d2ff; }
+        .msg-gray { color: #8a99ad; }
+
+        .chat-input {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 6px;
+            color: #4a5a6e;
+            font-style: italic;
+        }
+
+        /* ==========================================
+           FOOTER
+           ========================================== */
+        footer {
+            background: #01040a;
+            padding: 40px 10% 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .footer-socials a:hover {
+            background: var(--cyan-primary);
+            color: #000;
+            box-shadow: 0 0 10px var(--cyan-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            font-size: 0.7rem;
+            color: #4a5a70;
+            font-weight: 500;
+        }
+
+        .footer-bottom .slogan {
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero, .equipos-grid-layout, .comunidad-layout { grid-template-columns: 1fr; }
+            .modos-grid { grid-template-columns: repeat(2, 1fr); }
+            nav { display: none; }
+            .modos-header { flex-direction: column; align-items: flex-start; }
+            .modos-side-title { text-align: left; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <header>
+        <div class="brand">
+            <img src="https://i.ibb.co/Pzh1Tb5Y/imagen-2026-09-17-161649836.png" width="170">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="#">Equipos</a></li>
+                <li><a href="#">Modos</a></li>
+                <li><a href="#">Ranking</a></li>
+                <li><a href="#">Descarga</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn-header">Jugar Ahora &rarr;</a>
+    </header>
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="subtitle-tag">Haxball LPF</span>
+            <h1 class="hero-title">Como<br>HAXBALL<br><span>PERO LOCAL</span></h1>
+            <p class="hero-desc">Haxball LPF es un juego online de fútbol en 2D, rápido, divertido y competitivo. Armá tu equipo, jugá con amigos o enfrentate a otros jugadores en la liga.</p>
+            <a href="#" class="btn-main">Jugar Ahora &rarr;</a>
+        </div>
+        
+        <div class="preview-box">
+          <img src="https://i.ibb.co/MkxyBMLh/sas.png" alt="">
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- 2. MODOS DE JUEGO -->
+    <section class="modos">
+        <span class="subtitle-tag">Modos de juego</span>
+        <div class="modos-header">
+            <h2 class="modos-title">Elegí cómo jugar</h2>
+            <div class="modos-side-title">Mismo juego,<br>distintos<br>desafíos.</div>
+        </div>
+        <p class="modos-desc">Varias formas de disfrutar el juego. Desde partidos rápidos hasta la competencia oficial de la LPF.</p>
+
+        <div class="modos-grid">
+            <div class="card-modo">
+                <i class="fa-solid fa-users"></i>
+                <h3>Amistoso</h3>
+                <p>Jugá con tus amigos o con la IA en un partido frenetico.</p>
+            </div>
+            <div class="card-modo">
+                <i class="fa-solid fa-trophy"></i>
+                <h3>Liga LPF</h3>
+                <p>Competí en la liga, subí de categoría y demostrá quién es el mejor.</p>
+            </div>
+            <div class="card-modo">
+                <i class="fa-solid fa-stopwatch"></i>
+                <h3>Torneos</h3>
+                <p>Participá en la Copa Argentina y ganá recompensas.</p>
+            </div>
+            <div class="card-modo">
+                <i class="fa-solid fa-gear"></i>
+                <h3>Personalizado</h3>
+                <p>Configurá tus propios partidos, reglas y más.</p>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- 3. EQUIPOS -->
+    <section class="equipos">
+        <div class="equipos-grid-layout">
+            <div class="equipos-text">
+                <span class="subtitle-tag">Equipos</span>
+                <h2>Los grandes de la LPF</h2>
+                <p>Elegí tu equipo favorito. El juego cuenta con todos los clubes de la Primera División del fútbol argentino.</p>
+    
+
+            <!-- Escudos del Fútbol Argentino en Vector -->
+            <div class="escudos-grid">
+                <!-- River -->
+                <div class="escudo-box">
+                  <img src="https://i.ibb.co/Df0RVPSt/imagen-2026-09-15-170534156.png" width="45" alt="">
+                </div>
+                <!-- Boca -->
+                <div class="escudo-box">
+                  <img src="https://i.ibb.co/M5gzXsvt/imagen-2026-09-15-170807055.png" width="55" alt="">
+                </div>
+                <!-- Racing -->
+                <div class="escudo-box">
+                  <img src="https://i.ibb.co/Kp5V3rGh/imagen-2026-09-15-170937304.png" width="55" alt="">
+                </div>
+                <!-- Independiente -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/Zpkw4Kr2/imagen-2026-09-17-155055008.png" width="55" alt="">
+                </div>
+                <!-- San Lorenzo -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/zVLy8ZBj/imagen-2026-09-17-155206691.png" width="50" alt="">
+                </div>
+                <!-- Gimnasia -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/KzKtvdmS/imagen-2026-09-17-155304546.png" width="55" alt="">
+                </div>
+                <!-- Talleres -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/8DTPydcS/imagen-2026-09-17-155454356.png" width="50px" alt="">
+                </div>
+                <!-- Huracán -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/Tq2LJtMH/imagen-2026-09-17-155747322.png" width="36" alt="sa">
+                </div>
+                <!-- Vélez -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/3YGJMN72/imagen-2026-09-17-160125094.png" width="49" alt="">
+                </div>
+                <!-- Newell's -->
+                <div class="escudo-box">
+                    <img src="https://i.ibb.co/S7D6L97W/imagen-2026-09-17-160411274.png" width="50" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- 4. COMUNIDAD -->
+    <section class="comunidad">
+        <div class="comunidad-layout">
+            <div class="comunidad-text">
+                <h2>Sumate a la comunidad</h2>
+                <p>Conoce mas gente que juegue HAXBALL LPF, y comunicate directamente con el desarrollador para dar sugerencias y mejorar la experiencia de juego.</p>
+            </div>
+            
+            <a href="https://discord.gg/vm6gKxGPxG">
+                <img src="https://i.ibb.co/4ZdPMzts/imagen-2026-09-17-160716259.png" width="600" alt="">
+            </a>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div class="brand">
+                <a href="https://discord.gg/vm6gKxGPxG">
+                    <img src="https://i.ibb.co/Pzh1Tb5Y/imagen-2026-09-17-161649836.png" width="170px">
+                </a>
+            </div>
+            <nav style="display: block;">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Equipos</a></li>
+                    <li><a href="#">Modos</a></li>
+                    <li><a href="#">Descarga</a></li>
+                </ul>
+            </nav>
+            <div class="footer-socials">
+                <a href="https://discord.gg/vm6gKxGPxG"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>Haxball LPF © 2026. Todas las marcas y logotipos son propiedad de sus respectivos dueños.</div>
+            <div class="slogan">JUGÁ. COMPETÍ. DISFRUTÁ.</div>
+        </div>
+    </footer>
+
+</body>
+</html>
