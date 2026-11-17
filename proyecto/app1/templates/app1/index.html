@@ -543,6 +543,16 @@
     </style>
 </head>
 <body>
+    <div class="cuenta-bar" style="position:relative;z-index:1001;display:flex;justify-content:flex-end;gap:12px;padding:14px 10%;background:rgba(2,7,18,.92);border-bottom:1px solid rgba(0,210,255,.15);font-size:.78rem;">
+        {% if user.is_authenticated %}
+            <span style="color:#8a99ad;align-self:center;">Hola, {{ user.first_name|default:user.username }}</span>
+            {% if user.is_superuser %}<a href="{% url 'usuarios_registrados' %}" style="color:#00d2ff;font-weight:700;">USUARIOS REGISTRADOS</a>{% endif %}
+            <form method="post" action="{% url 'logout' %}" style="margin:0;">{% csrf_token %}<button type="submit" style="background:transparent;border:1px solid #00d2ff;color:#00d2ff;padding:6px 12px;cursor:pointer;">CERRAR SESIÓN</button></form>
+        {% else %}
+            <a href="{% url 'login' %}" style="color:#00d2ff;font-weight:700;">INICIAR SESIÓN</a>
+            <a href="{% url 'registro' %}" style="color:#00d2ff;font-weight:700;">REGISTRARSE</a>
+        {% endif %}
+    </div>
 
     {% include 'app1/componentes/navbar.html' %}
 
@@ -670,12 +680,6 @@
     {% block content %}
         <h1>test chiquitapia boton</h1>
     {% endblock %}
-
-    <body>
-        {% block content %}
-        
-        {% endblock %}
-    </body>
 
     <!-- FOOTER -->
     {% include 'app1/componentes/footer.html' %}
